@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_NAME:-promptly}
+      POSTGRES_USER: ${DB_USER:-promptly}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-promptly}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - promptly-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U promptly"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://promptly:promptly@db:5432/promptly
+      SERVER_PORT: 3000
+    networks:
+      - promptly-network
+
+volumes:
+  postgres_data:
+
+networks:
+  promptly-network:
+    driver: bridge

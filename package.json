@@ -1,0 +1,31 @@
+{
+  "name": "promptly",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.0",
+    "hono": "^4.7.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.0",
+    "pg": "^8.13.3",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pg": "^8.11.11",
+    "@types/pino": "^7.0.5",
+    "drizzle-kit": "^0.30.5",
+    "tsx": "^4.19.3"
+  }
+}
