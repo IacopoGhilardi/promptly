@@ -1,4 +1,4 @@
-import { eq, isNull } from 'drizzle-orm';
+import { eq, isNull, and } from 'drizzle-orm';
 import dbConfig from '..';
 import { logger } from '../../utils/logger';
 
@@ -24,7 +24,7 @@ export class BaseRepository<T> {
     let query = this.db.select().from(this.table).where(isNull(this.table.deleted_at));
     
     if (userId) {
-      query = query.where(eq(this.table.userId, userId));
+        query = this.db.select().from(this.table).where(and(eq(this.table.userId, userId), isNull(this.table.deleted_at)));
     }
     
     return await query;
@@ -32,11 +32,31 @@ export class BaseRepository<T> {
 
   async findById(id: number) {
     logger.info({ id }, `Fetching ${this.tableName} by ID from database`);
+    
     const result = await this.db
       .select()
       .from(this.table)
-      .where(eq(this.table.id, id))
+      .where(
+        and(
+          eq(this.table.id, id),
+          isNull(this.table.deleted_at)
+        )
+      );
+    
+    return result[0];
+  }
+
+  async findByPublicId(publicId: string) {
+    logger.info({ publicId }, `Fetching ${this.tableName} by public ID from database`);
+    const result = await this.db
+      .select()
+      .from(this.table)
+      .where(eq(this.table.publicId, publicId))
       .where(isNull(this.table.deleted_at));
+
+    if (result.length === 0) {
+      return null;
+    }
     
     return result[0];
   }
@@ -49,6 +69,10 @@ export class BaseRepository<T> {
       .where(eq(this.table.id, id))
       .returning();
     
+    if (result.length === 0) {
+      return null;
+    }
+    
     return result[0];
   }
 
@@ -59,6 +83,10 @@ export class BaseRepository<T> {
       .set({ deleted_at: new Date() })
       .where(eq(this.table.id, id))
       .returning();
+    
+    if (result.length === 0) {
+      return null;
+    }
     
     return result[0];
   }
