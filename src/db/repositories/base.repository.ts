@@ -1,5 +1,4 @@
 import { eq, isNull, and } from 'drizzle-orm';
-import dbConfig from '..';
 import { logger } from '../../utils/logger';
 
 export class BaseRepository<T> {
@@ -7,8 +6,8 @@ export class BaseRepository<T> {
   protected table: any;
   protected tableName: string;
 
-  constructor(table: any, tableName: string) {
-    this.db = dbConfig.db;
+  constructor(db: any, table: any, tableName: string) {
+    this.db = db;
     this.table = table;
     this.tableName = tableName;
   }
@@ -51,8 +50,7 @@ export class BaseRepository<T> {
     const result = await this.db
       .select()
       .from(this.table)
-      .where(eq(this.table.publicId, publicId))
-      .where(isNull(this.table.deleted_at));
+      .where(and(eq(this.table.publicId, publicId), isNull(this.table.deleted_at)));
 
     if (result.length === 0) {
       return null;

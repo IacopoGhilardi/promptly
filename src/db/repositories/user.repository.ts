@@ -1,21 +1,20 @@
-import { eq, isNull } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 import { users } from '../../models/users';
 import { BaseRepository } from './base.repository';
 import { logger } from '../../utils/logger';
+import dbConfig from '../index';
 
 export class UserRepository extends BaseRepository<typeof users> {
   constructor() {
-    super(users, 'user');
+    super(dbConfig.db, users, 'user');
   }
 
-  // Metodi specifici per User
   async findByPublicId(publicId: string) {
     logger.info({ userId: publicId }, 'Fetching user by ID from database');
     const result = await this.db
       .select()
       .from(this.table)
-      .where(eq(this.table.publicId, publicId))
-      .where(isNull(this.table.deleted_at));
+      .where(and(eq(this.table.publicId, publicId), isNull(this.table.deleted_at)));
     
     return result[0];
   }
@@ -25,8 +24,11 @@ export class UserRepository extends BaseRepository<typeof users> {
     const result = await this.db
       .select()
       .from(this.table)
-      .where(eq(this.table.email, email))
-      .where(isNull(this.table.deleted_at));
+      .where(and(eq(this.table.email, email), isNull(this.table.deleted_at)));
+
+    if (result.length === 0) {
+      return null;
+    }
     
     return result[0];
   }

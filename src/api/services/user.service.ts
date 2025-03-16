@@ -4,6 +4,9 @@ import { logger } from '../../utils/logger';
 import { userRepository } from '../../db/repositories/user.repository';
 import { generateToken, generatePasswordResetToken, verifyToken } from '../../utils/jwt';
 import { sendTemplatedEmail } from '../../emails/index';
+import { users } from '../../models/users';
+import { eq } from 'drizzle-orm';
+import dbConfig from '../../db/index';
 
 export interface CreateUserDto {
   name: string;
@@ -76,7 +79,7 @@ export class UserService {
       data.password = await hashPassword(data.password);
     }
 
-    const result = await userRepository.update(publicId, data);
+    const result = await userRepository.update(Number(publicId), data);
 
     if (!result) {
       logger.warn({ userId: publicId }, 'User not found for update');
@@ -89,7 +92,7 @@ export class UserService {
 
   async deleteUser(publicId: string) {
     logger.info({ userId: publicId }, 'Deleting user');
-    const result = await userRepository.softDelete(publicId);
+    const result = await userRepository.softDelete(Number(publicId));
 
     if (!result) {
       logger.warn({ userId: publicId }, 'User not found for deletion');
@@ -111,7 +114,7 @@ export class UserService {
     
     const user = await this.createUser(data);
     
-    const token = generateToken({ 
+    const token = generateToken({
       userId: user.publicId, 
       email: user.email 
     });
