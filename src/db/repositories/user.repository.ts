@@ -29,6 +29,8 @@ export class UserRepository extends BaseRepository<typeof users> {
     if (result.length === 0) {
       return null;
     }
+
+    logger.info(result, 'User found by email');
     
     return result[0];
   }

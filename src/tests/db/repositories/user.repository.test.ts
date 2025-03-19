@@ -4,8 +4,13 @@ import { UserRepository } from '../../../db/repositories/user.repository';
 const mockDb = {
   select: mock(() => ({
     from: mock(() => ({
-      where: mock(() => ({
-        where: mock(() => [{ id: 1, email: 'test@example.com', publicId: 'abc123' }])
+      where: mock((condition) => ({
+        where: mock(() => [{ 
+          id: 1, 
+          email: 'test@example.com', 
+          password: 'password123',
+          publicId: 'abc123' 
+        }])
       }))
     }))
   })),
@@ -67,6 +72,13 @@ describe('UserRepository', () => {
 
   test('findByEmail should return a user by email', async () => {
     const email = 'test@example.com';
+    const data = { 
+      email: 'test@example.com',
+      password: 'password123',
+      name: 'Test User'
+    };
+    
+    await repository.create(data);
     const result = await repository.findByEmail(email);
     
     expect(mockDb.select).toHaveBeenCalled();

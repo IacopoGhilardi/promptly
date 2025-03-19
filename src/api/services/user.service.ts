@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { hashPassword } from '../../utils/auth';
+import { hashPassword, comparePasswords } from '../../utils/auth';
 import { logger } from '../../utils/logger';
 import { userRepository } from '../../db/repositories/user.repository';
 import { generateToken, generatePasswordResetToken, verifyToken } from '../../utils/jwt';
@@ -138,9 +138,8 @@ export class UserService {
       throw new Error('Invalid email or password');
     }
     
-    const hashedPassword = await hashPassword(data.password);
-    logger.info({ hashedPassword, userPassword: user.password }, 'Comparing passwords');
-    if (user.password !== hashedPassword) {
+    const passwordMatch = await comparePasswords(data.password, user.password);
+    if (!passwordMatch) {
       logger.warn({ email: data.email }, 'Login failed: incorrect password');
       throw new Error('Invalid email or password');
     }

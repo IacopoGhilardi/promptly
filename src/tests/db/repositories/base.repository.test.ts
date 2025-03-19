@@ -38,7 +38,7 @@ mock.module('../../../db', () => ({
 
 class TestRepository extends BaseRepository<any> {
   constructor() {
-    super({ id: 'id', name: 'name', deleted_at: 'deleted_at', userId: 'userId' }, 'test');
+    super(mockDb, { id: 'id', name: 'name', deleted_at: 'deleted_at', userId: 'userId' }, 'test');
     this.db = mockDb;
   }
 }
