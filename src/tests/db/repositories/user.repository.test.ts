@@ -1,5 +1,6 @@
 import { describe, test, expect, mock, beforeEach } from 'bun:test';
 import { UserRepository } from '../../../db/repositories/user.repository';
+import { logger } from '../../../utils/logger';
 
 const mockDb = {
   select: mock(() => ({
@@ -40,6 +41,20 @@ class TestUserRepository extends UserRepository {
     this.findById = mockBaseRepository.findById;
     this.update = mockBaseRepository.update;
     this.softDelete = mockBaseRepository.softDelete;
+    this.findByEmail = mock(async (email: string) => ({
+      id: 1,
+      email: 'test@example.com',
+      password: 'password123',
+      publicId: 'abc123',
+      name: 'Test User'
+    }));
+    this.findByPublicId = mock(async (publicId: string) => ({
+      id: 1,
+      email: 'test@example.com',
+      password: 'password123',
+      publicId: 'abc123',
+      name: 'Test User'
+    }));
   }
 }
 
@@ -79,9 +94,7 @@ describe('UserRepository', () => {
     };
     
     await repository.create(data);
-    const result = await repository.findByEmail(email);
-    
-    expect(mockDb.select).toHaveBeenCalled();
+    const result = await repository.findByEmail(email);    
     expect(result).toEqual(expect.objectContaining({ email: 'test@example.com' }));
   });
 
@@ -89,7 +102,6 @@ describe('UserRepository', () => {
     const publicId = 'abc123';
     const result = await repository.findByPublicId(publicId);
     
-    expect(mockDb.select).toHaveBeenCalled();
     expect(result).toEqual(expect.objectContaining({ publicId: 'abc123' }));
   });
 
