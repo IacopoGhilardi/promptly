@@ -5,7 +5,6 @@ import { authMiddleware } from "../../middlewares/auth.midleware";
 export function initCategoriesRoutes(app: Hono) {
     const categories = new Hono();
     
-    // Secure all category routes with auth middleware
     categories.use('*', authMiddleware);
     
     categories.post('/', (c) => categoryController.createCategory(c));
