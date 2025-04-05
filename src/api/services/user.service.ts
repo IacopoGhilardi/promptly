@@ -4,9 +4,6 @@ import { logger } from '../../utils/logger';
 import { userRepository } from '../../db/repositories/user.repository';
 import { generateToken, generatePasswordResetToken, verifyToken } from '../../utils/jwt';
 import { sendTemplatedEmail } from '../../emails/index';
-import { users } from '../../models/users';
-import { eq } from 'drizzle-orm';
-import dbConfig from '../../db/index';
 
 export interface CreateUserDto {
   name: string;
@@ -170,7 +167,7 @@ export class UserService {
     
     await sendTemplatedEmail(
       email, 
-      'Reset Password Promptly', 
+      'Reset Password Remindr', 
       'reset_password', 
       { resetUrl }
     );

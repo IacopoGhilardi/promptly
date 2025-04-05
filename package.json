@@ -1,5 +1,5 @@
 {
-  "name": "promptly",
+  "name": "Remindr",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "generate": "drizzle-kit generate",
@@ -7,12 +7,18 @@
     "test": "bun test src/tests"
   },
   "dependencies": {
+    "@bull-board/api": "^6.7.10",
+    "@bull-board/hono": "^6.7.10",
+    "@types/node-cron": "^3.0.11",
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
+    "bullmq": "^5.44.3",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
     "hono": "^4.7.2",
+    "ioredis": "^5.6.0",
     "jsonwebtoken": "^9.0.2",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.10.0",
     "pg": "^8.13.3",
     "pino": "^9.6.0",

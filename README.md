@@ -1,7 +1,7 @@
-# Promptly - Reminder and Deadline Management App
+# Remindr - Reminder and Deadline Management App
 
 ## Overview
-Promptly is a backend application for comprehensive reminder and deadline management, designed to simplify users' lives by providing a single point of management for all their important due dates.
+Remindr is a backend application for comprehensive reminder and deadline management, designed to simplify users' lives by providing a single point of management for all their important due dates.
 
 ## Technologies Used
 - **Runtime**: [Bun](https://bun.sh/)

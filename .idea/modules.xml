@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/promptly.iml" filepath="$PROJECT_DIR$/.idea/promptly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Remindr.iml" filepath="$PROJECT_DIR$/.idea/Remindr.iml" />
     </modules>
   </component>
 </project>

@@ -1,5 +1,11 @@
-import { pgTable, serial, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
 import { timestamps } from '../db/helpers/columns';
+
+const userPreferences = {
+    emailNotifications: boolean('email_notifications').notNull().default(true),
+    smsNotifications: boolean('sms_notifications').notNull().default(true),
+    pushNotifications: boolean('push_notifications').notNull().default(true),
+};
 
 export const users = pgTable('users', {
     id: serial('id').primaryKey(),
@@ -7,5 +13,6 @@ export const users = pgTable('users', {
     email: varchar({length: 50}).notNull().unique(),
     password: text().notNull(),
     publicId: uuid('public_id').notNull().unique(),
+    ...userPreferences,
     ...timestamps,
 });

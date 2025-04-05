@@ -4,17 +4,29 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_DB: ${DB_NAME:-promptly}
-      POSTGRES_USER: ${DB_USER:-promptly}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-promptly}
+      POSTGRES_DB: ${DB_NAME:-Remindr}
+      POSTGRES_USER: ${DB_USER:-Remindr}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Remindr}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - promptly-network
+      - Remindr-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U promptly"]
+      test: ["CMD-SHELL", "pg_isready -U Remindr"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - Remindr-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -28,15 +40,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     environment:
-      DATABASE_URL: postgresql://promptly:promptly@db:5432/promptly
+      DATABASE_URL: postgresql://Remindr:Remindr@db:5432/Remindr
+      REDIS_URL: redis://redis:6379
       SERVER_PORT: 3000
     networks:
-      - promptly-network
+      - Remindr-network
 
 volumes:
   postgres_data:
 
 networks:
-  promptly-network:
+  Remindr-network:
     driver: bridge

@@ -38,7 +38,7 @@ export async function sendEmail(to: string, subject: string, html: string) {
   if (!transporter) await createTransporter();
   
   const info = await transporter.sendMail({
-    from: `"Promptly App" <${process.env.EMAIL_FROM || 'noreply@promptlyapp.com'}>`,
+    from: `"Remindr App" <${process.env.EMAIL_FROM || 'noreply@Remindrapp.com'}>`,
     to,
     subject,
     html,
