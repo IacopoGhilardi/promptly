@@ -1,5 +1,5 @@
 import { Context } from 'hono';
-import { categoryService } from '../services/category.service';
+import { categoryService } from '../../../services/category.service';
 import { jsonResponse, ResponseStatus } from '../../utils/response';
 import { logger } from '../../utils/logger';
 

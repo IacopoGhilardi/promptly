@@ -88,4 +88,10 @@ export class BaseRepository<T> {
     
     return result[0];
   }
+
+  async delete(id: number) {
+    logger.info({ id }, `Deleting ${this.tableName} in database`);
+    const result = await this.db.delete(this.table).where(eq(this.table.id, id));
+    return result;
+  }
 } 

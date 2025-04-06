@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import { hashPassword, comparePasswords } from '../../utils/auth';
-import { logger } from '../../utils/logger';
-import { userRepository } from '../../db/repositories/user.repository';
-import { generateToken, generatePasswordResetToken, verifyToken } from '../../utils/jwt';
-import { sendTemplatedEmail } from '../../emails/index';
+import { hashPassword, comparePasswords } from '../src/utils/auth';
+import { logger } from '../src/utils/logger';
+import { userRepository } from '../src/db/repositories/user.repository';
+import { generateToken, generatePasswordResetToken, verifyToken } from '../src/utils/jwt';
+import { sendTemplatedEmail } from '../src/emails/index';
 
 export interface CreateUserDto {
   name: string;

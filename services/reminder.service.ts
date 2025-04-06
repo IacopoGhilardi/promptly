@@ -1,5 +1,5 @@
-import { reminderRepository } from '../../db/repositories/reminder.repository';
-import { logger } from '../../utils/logger';
+import { reminderRepository } from '../src/db/repositories/reminder.repository';
+import { logger } from '../src/utils/logger';
 
 export interface CreateReminderDto {
   title: string;

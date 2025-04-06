@@ -1,5 +1,5 @@
 import { Context } from 'hono';
-import { userService } from '../services/user.service';
+import { userService } from '../../../services/user.service';
 import { jsonResponse, ResponseStatus } from '../../utils/response';
 import { logger } from '../../utils/logger';
 

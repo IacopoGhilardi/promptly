@@ -1,5 +1,6 @@
 import { pgTable, serial, varchar, jsonb, pgEnum } from "drizzle-orm/pg-core";
 import { timestamps } from "../db/helpers/columns";
+import { queues } from "./queue";
 
 export const queueJobStatusEnum = pgEnum('queue_job_status', ['pending', 'processing', 'completed', 'failed']);
 export const queueJobTypeEnum = pgEnum('queue_job_type', ['reminder_email', 'reminder_sms', 'reminder_push']);
@@ -11,5 +12,6 @@ export const queueJobs = pgTable('queue_jobs', {
     data: jsonb().notNull(),
     status: queueJobStatusEnum('status').notNull(),
     type: queueJobTypeEnum('type').notNull(),
+    queueId: serial('queue_id').references(() => queues.id),
     ...timestamps,
 });

@@ -1,5 +1,5 @@
 import { Context } from 'hono';
-import { reminderService } from '../services/reminder.service';
+import { reminderService } from '../../../services/reminder.service';
 import { jsonResponse, ResponseStatus } from '../../utils/response';
 import { logger } from '../../utils/logger';
 

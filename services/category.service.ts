@@ -1,5 +1,5 @@
-import { categoryRepository } from '../../db/repositories/category.repository';
-import { logger } from '../../utils/logger';
+import { categoryRepository } from '../src/db/repositories/category.repository';
+import { logger } from '../src/utils/logger';
 
 export interface CreateCategoryDto {
   name: string;

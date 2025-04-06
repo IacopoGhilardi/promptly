@@ -1,5 +1,5 @@
 import { describe, test, expect, mock, beforeEach } from 'bun:test';
-import { ReminderService } from '../../../api/services/reminder.service';
+import { ReminderService } from '../../../../services/reminder.service';
 import { reminderRepository } from '../../../db/repositories/reminder.repository';
 
 mock.module('../../../db/repositories/reminder.repository', () => ({

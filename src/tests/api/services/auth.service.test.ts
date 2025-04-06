@@ -1,5 +1,5 @@
 import { describe, test, expect, mock, beforeEach } from 'bun:test';
-import { UserService } from '../../../api/services/user.service';
+import { UserService } from '../../../../services/user.service';
 import { userRepository } from '../../../db/repositories/user.repository';
 import { comparePasswords, hashPassword } from '../../../utils/auth';
 import * as passwordUtils from '../../../utils/auth';
