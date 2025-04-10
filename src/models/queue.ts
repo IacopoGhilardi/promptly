@@ -1,5 +1,5 @@
 import { pgTable, serial, text, integer } from "drizzle-orm/pg-core";
-import { timestamps } from "../db/helpers/columns";
+import { defaultSchema, timestamps } from "../db/helpers/columns";
 
 export const QUEUE_TYPE = {
     EMAIL: 'email',
@@ -13,7 +13,7 @@ export const QUEUE_STATUS = {
     STOPPED: 'stopped',
 } as const;
 
-export const queues = pgTable('queues', {
+export const queues = defaultSchema.table('queues', {
     id: serial('id').primaryKey(),
     name: text('name').notNull().unique(),
     type: text('type').notNull(), // email, sms, push, etc.

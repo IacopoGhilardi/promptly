@@ -1,5 +1,7 @@
+import { Queue } from "bullmq";
+import db from "../src/db";
 import { queueRepository } from "../src/db/repositories/queue.repository";
-import { queueJobRepository } from "../src/db/repositories/queueJob.repository";
+import { logger } from "../src/utils/logger";
 
 export interface QueueCreateDto {
     queueName: string;
@@ -13,8 +15,21 @@ export class QueueService {
         await queueRepository.create(queue);
     }
 
-    async getQueue(queueId: number) {
+    async getQueueFromDb(queueId: number) {
         return await queueRepository.findById(queueId);
+    }
+
+    async getQueueFromRedis(queueName: string) {
+        return await queueRepository.findInRedis(queueName);
+    }
+
+    async addQueueToRedis(queueName: string, queueData: any) {
+        logger.info({ queueName, queueData }, 'Adding queue to Redis');
+        new Queue(queueName, {
+            connection: db.redisConnection,
+        });
+
+        logger.info({ queueName, queueData }, 'Queue added to Redis');
     }
 
     async updateQueue(queueId: number, queue: QueueCreateDto) {
@@ -27,5 +42,7 @@ export class QueueService {
 
     async getQueues() {
         return await queueRepository.findAll();
-    } 
+    }
 }
+
+export const queueService = new QueueService();

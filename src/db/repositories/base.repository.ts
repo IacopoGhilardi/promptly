@@ -1,15 +1,18 @@
 import { eq, isNull, and } from 'drizzle-orm';
 import { logger } from '../../utils/logger';
 
+
 export class BaseRepository<T> {
+  protected redisConnection: any;
   protected db: any;
   protected table: any;
   protected tableName: string;
 
-  constructor(db: any, table: any, tableName: string) {
+  constructor(db: any, table: any, tableName: string, redisConnection: any) {
     this.db = db;
     this.table = table;
     this.tableName = tableName;
+    this.redisConnection = redisConnection;
   }
 
   async create(data: any) {

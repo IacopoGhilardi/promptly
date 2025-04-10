@@ -6,7 +6,7 @@ import dbConfig from '../index';
 
 export class UserRepository extends BaseRepository<typeof users> {
   constructor() {
-    super(dbConfig.db, users, 'user');
+    super(dbConfig.db, users, 'user', dbConfig.redisConnection);
   }
 
   async findByPublicId(publicId: string) {

@@ -14,6 +14,6 @@ export default defineConfig({
     },
     migrations: {
         table: 'drizzle_migrations',
-        schema: 'Remindr',
+        schema: 'promptly',
     },
 });

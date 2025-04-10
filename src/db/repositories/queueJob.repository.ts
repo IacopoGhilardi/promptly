@@ -4,7 +4,7 @@ import dbConfig from '../index';
 
 export class QueueJobRepository extends BaseRepository<typeof queueJobs> {
   constructor() {
-    super(dbConfig.db, queueJobs, 'queue_job');
+    super(dbConfig.db, queueJobs, 'queue_job', dbConfig.redisConnection);
   }
 }
 

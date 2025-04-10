@@ -4,7 +4,7 @@ import dbConfig from '../index';
 
 export class CategoryRepository extends BaseRepository<typeof categories> {
   constructor() {
-    super(dbConfig.db, categories, 'category');
+    super(dbConfig.db, categories, 'category', dbConfig.redisConnection);
   }
 }
 

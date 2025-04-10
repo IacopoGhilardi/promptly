@@ -1,5 +1,6 @@
-import { initNotificationScheduler } from './notification.scheduler';
+import { ReminderScheduler } from './reminder.scheduler';
 
 export function initCronJobs() {
-    initNotificationScheduler();
+    const reminderScheduler = new ReminderScheduler();
+    reminderScheduler.initReminderScheduler();
 }

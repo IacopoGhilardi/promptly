@@ -1,4 +1,6 @@
-import { timestamp } from 'drizzle-orm/pg-core';
+import { pgSchema, timestamp } from 'drizzle-orm/pg-core';
+
+export const defaultSchema = pgSchema('promptly');
 
 export const timestamps = {
     updated_at: timestamp(),
