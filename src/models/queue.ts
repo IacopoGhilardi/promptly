@@ -13,6 +13,24 @@ export const QUEUE_STATUS = {
     STOPPED: 'stopped',
 } as const;
 
+export const BASE_QUEUES = [
+    {
+        queueName: 'email_queue',
+        queueType: QUEUE_TYPE.EMAIL,
+        queueStatus: QUEUE_STATUS.ACTIVE,
+    },
+    {
+        queueName: 'sms_queue',
+        queueType: QUEUE_TYPE.SMS,
+        queueStatus: QUEUE_STATUS.ACTIVE,
+    },
+    {
+        queueName: 'push_queue',
+        queueType: QUEUE_TYPE.PUSH,
+        queueStatus: QUEUE_STATUS.ACTIVE,
+    }
+]
+
 export const queues = defaultSchema.table('queues', {
     id: serial('id').primaryKey(),
     name: text('name').notNull().unique(),

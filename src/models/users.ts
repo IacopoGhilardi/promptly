@@ -1,4 +1,4 @@
-import { pgTable, serial, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
+import { serial, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
 import { defaultSchema, timestamps } from '../db/helpers/columns';
 
 const userPreferences = {
